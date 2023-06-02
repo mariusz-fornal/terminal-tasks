@@ -8,7 +8,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 #[AsCommand(
     name: 'create-task',
@@ -31,8 +30,7 @@ class CreateTaskCommand extends Command
         $context = $input->getArgument('task') ?? self::DefaultContext;
 
         $archive = $this->archiveStorage->getArchive();
-        $archive->a
-
+        $this->archiveStorage->saveArchive($archive);
 
         return Command::SUCCESS;
     }
