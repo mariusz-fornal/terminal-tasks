@@ -15,9 +15,6 @@ class ArchiveAggregate
 
     private static function import(array $archive): ContextCollection
     {
-        if (empty($archive)) {
-            return new ContextCollection();
-        }
         return new ContextCollection();
     }
 

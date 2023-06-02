@@ -17,6 +17,21 @@ class ArchiveStorage
 
     public function saveArchive(ArchiveAggregate $archive): void
     {
-        $archive->
+        if (!$this->archiveNotExists()) {
+        }
+        $this->filesystem->dumpFile($this->getArchivePath(), $archive);
+    }
+
+    private function archiveNotExists(): bool
+    {
+        return !$this->filesystem->exists($this->getArchivePath());
+    }
+
+    /**
+     * @return string
+     */
+    private function getArchivePath(): string
+    {
+        return '~/.terminal-tasks/archive.json';
     }
 }
