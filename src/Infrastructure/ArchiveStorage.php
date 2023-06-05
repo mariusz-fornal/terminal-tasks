@@ -18,8 +18,10 @@ class ArchiveStorage
     public function saveArchive(ArchiveAggregate $archive): void
     {
         if (!$this->archiveNotExists()) {
+            $this->filesystem->mkdir('~/.terminal-tasks');
+            $this->filesystem->touch($this->getArchivePath());
         }
-        $this->filesystem->dumpFile($this->getArchivePath(), $archive);
+        $this->filesystem->dumpFile($this->getArchivePath(), $archive->toJson());
     }
 
     private function archiveNotExists(): bool
@@ -32,6 +34,6 @@ class ArchiveStorage
      */
     private function getArchivePath(): string
     {
-        return '~/.terminal-tasks/archive.json';
+        return realpath('~/.terminal-tasks/archive.json');
     }
 }
