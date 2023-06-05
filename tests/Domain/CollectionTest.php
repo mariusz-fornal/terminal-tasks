@@ -41,4 +41,15 @@ class CollectionTest extends TestCase
         $collection->addItem('one');
         $this->assertSame(['one', 'one', 'one'], $collection->toArray());
     }
+
+    public function testDropItem()
+    {
+        $collection = new Collection();
+        $collection->addItem('one');
+        $collection->addItem('one');
+        $collection->addItem('one');
+        $this->assertSame(['one', 'one', 'one'], $collection->toArray());
+        $collection->dropItemById(1);
+        $this->assertSame(['one', 2 => 'one'], $collection->toArray());
+    }
 }
