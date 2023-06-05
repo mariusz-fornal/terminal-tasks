@@ -21,6 +21,11 @@ class Collection
         $this->items[] = $item;
     }
 
+    public function dropItemById($id): void
+    {
+        unset($this->items[$id]);
+    }
+
     public function toArray(): array
     {
         return $this->items;
