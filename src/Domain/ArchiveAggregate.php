@@ -37,4 +37,9 @@ class ArchiveAggregate
     {
         return $this->contexts->find($name);
     }
+
+    public function toJson(): string
+    {
+        return json_encode($this->contexts->toArray());
+    }
 }
