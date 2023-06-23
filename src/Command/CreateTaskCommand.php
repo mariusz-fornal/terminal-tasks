@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Domain\Context;
 use App\Infrastructure\ArchiveStorage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -27,9 +28,11 @@ class CreateTaskCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $task = $input->getArgument('task');
-        $context = $input->getArgument('task') ?? self::DefaultContext;
+        $contextName = $input->getArgument('context') ?? self::DefaultContext;
 
         $archive = $this->archiveStorage->getArchive();
+        $context = $archive->addContext(new Context($contextName));
+
         $this->archiveStorage->saveArchive($archive);
 
         return Command::SUCCESS;

@@ -23,9 +23,14 @@ class ArchiveAggregate
 
     }
 
-    public function addContext()
+    public function addContext(Context $newContext): Context
     {
-
+        $context = $this->contexts->findBy('name', $newContext->name);
+        if (empty($context)) {
+            $this->contexts->addItem($newContext);
+            return $newContext;
+        }
+        return $context;
     }
 
     public function removeContext(): void

@@ -6,5 +6,7 @@ namespace App\Domain;
 
 class Context
 {
-
+    public function __construct(public string $name)
+    {
+    }
 }
