@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Domain\Context;
+use App\Domain\Task;
 use App\Infrastructure\ArchiveStorage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class CreateTaskCommand extends Command
 {
-    const DefaultContext = 'default';
+    const DEFAULT_CONTEXT = 'default';
 
     public function __construct(private ArchiveStorage $archiveStorage)
     {
@@ -27,11 +28,13 @@ class CreateTaskCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $task = $input->getArgument('task');
-        $contextName = $input->getArgument('context') ?? self::DefaultContext;
+        $taskName = $input->getArgument('task');
+        $contextName = $input->getArgument('context') ?? self::DEFAULT_CONTEXT;
 
         $archive = $this->archiveStorage->getArchive();
         $context = $archive->addContext(new Context($contextName));
+        $context->addTask(new Task($taskName));
+
 
         $this->archiveStorage->saveArchive($archive);
 
