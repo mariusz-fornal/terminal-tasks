@@ -1,5 +1,5 @@
 {
-    "name" : "Terminal tasks",
+    "name" : "mariusz-fornal/terminal-tasks",
     "description" : "App which allows you manage tasks from console",
     "type": "project",
     "license": "MIT",
