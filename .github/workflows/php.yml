@@ -11,11 +11,11 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+    - uses: php-action/composer@v6
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -36,4 +36,10 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run test suite
-      run: ./vendor/bin/phpunit
+      uses: php-actions/phpunit@v3
+      env:
+        TEST_NAME: Scarlett
+      with:
+        bootstrap: vendor/autoload.php
+        configuration: phpunit.xml
+        args: --coverage-text
