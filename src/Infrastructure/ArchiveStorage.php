@@ -22,6 +22,7 @@ class ArchiveStorage
             $this->filesystem->touch($this->getArchivePath());
         }
         $this->filesystem->dumpFile($this->getArchivePath(), $archive->toJson());
+        dd($this->getArchivePath(), $archive->toJson());
     }
 
     private function archiveNotExists(): bool
