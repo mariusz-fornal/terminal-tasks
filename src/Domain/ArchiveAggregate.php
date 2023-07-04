@@ -47,4 +47,14 @@ class ArchiveAggregate
     {
         return json_encode($this->contexts->toArray());
     }
+
+    public function isEmpty(): bool
+    {
+        return $this->contexts->isEmpty();
+    }
+
+    public function getContextCollection(): ContextCollection
+    {
+        return $this->contexts;
+    }
 }

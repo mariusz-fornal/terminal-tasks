@@ -6,7 +6,7 @@ namespace App\Domain;
 
 class Collection
 {
-    public function __construct(private $items = []) { }
+    public function __construct(protected $items = []) { }
 
     public function findBy(string $field, $value): mixed
     {
@@ -29,5 +29,10 @@ class Collection
     public function toArray(): array
     {
         return $this->items;
+    }
+
+    public function isEmpty(): bool
+    {
+        return count($this->items) > 0;
     }
 }

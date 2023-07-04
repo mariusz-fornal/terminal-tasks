@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Domain\Context;
 use App\Domain\Task;
 use App\Infrastructure\ArchiveStorage;
+use App\Infrastructure\TaskListFormatter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -31,7 +32,8 @@ class ListTasksCommand extends Command
         $contextName = $input->getArgument('context') ?? self::DEFAULT_CONTEXT;
 
         $archive = $this->archiveStorage->getArchive();
-        echo json_encode($archive);
+
+        TaskListFormatter::display($archive);
 
         return Command::SUCCESS;
     }
@@ -40,7 +42,6 @@ class ListTasksCommand extends Command
     {
         $this
             ->setHelp('This command allows you to create new task')
-            ->addArgument('task', InputArgument::REQUIRED, 'task name')
             ->addArgument('context', InputArgument::OPTIONAL, 'task context name')
         ;
     }
