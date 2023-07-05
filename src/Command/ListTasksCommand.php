@@ -41,7 +41,7 @@ class ListTasksCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setHelp('This command allows you to create new task')
+            ->setHelp('This command allows you to list tasks and contexts')
             ->addArgument('context', InputArgument::OPTIONAL, 'task context name')
         ;
     }

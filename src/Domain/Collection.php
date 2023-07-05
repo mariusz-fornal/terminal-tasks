@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-class Collection
+use JsonSerializable;
+
+class Collection implements JsonSerializable
 {
     public function __construct(protected $items = []) { }
 
@@ -34,5 +36,10 @@ class Collection
     public function isEmpty(): bool
     {
         return count($this->items) > 0;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->items;
     }
 }
