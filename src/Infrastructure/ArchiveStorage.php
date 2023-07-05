@@ -7,7 +7,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ArchiveStorage
 {
-
     public function __construct(private Filesystem $filesystem) {}
 
     public function getArchive(): ArchiveAggregate
@@ -17,12 +16,12 @@ class ArchiveStorage
 
     public function saveArchive(ArchiveAggregate $archive): void
     {
+        dd($this->getArchivePath());
         if (!$this->archiveNotExists()) {
             $this->filesystem->mkdir($this->getArchiveDirectory());
             $this->filesystem->touch($this->getArchivePath());
         }
         $this->filesystem->dumpFile($this->getArchivePath(), $archive->toJson());
-        dd($this->getArchivePath(), $archive->toJson());
     }
 
     private function archiveNotExists(): bool

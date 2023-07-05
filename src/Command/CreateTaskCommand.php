@@ -35,7 +35,6 @@ class CreateTaskCommand extends Command
         $context = $archive->addContext(new Context($contextName));
         $context->addTask(new Task($taskName));
 
-
         $this->archiveStorage->saveArchive($archive);
 
         return Command::SUCCESS;

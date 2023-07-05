@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-class ArchiveAggregate
+use JsonSerializable;
+
+class ArchiveAggregate implements JsonSerializable
 {
     private ContextCollection $contexts;
 
@@ -45,7 +47,7 @@ class ArchiveAggregate
 
     public function toJson(): string
     {
-        return json_encode($this->contexts->toArray());
+        return json_encode($this);
     }
 
     public function isEmpty(): bool
@@ -56,5 +58,10 @@ class ArchiveAggregate
     public function getContextCollection(): ContextCollection
     {
         return $this->contexts;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->contexts->toArray();
     }
 }
