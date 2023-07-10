@@ -8,41 +8,28 @@ use JsonSerializable;
 
 class ArchiveAggregate implements JsonSerializable
 {
-    private ContextCollection $contexts;
+    public function __construct(private ContextCollection $contexts = new ContextCollection()) {}
 
-    public function __construct(array $archive = [])
+    public static function import(array $archiveData): ArchiveAggregate
     {
-        $this->contexts = self::import($archive);
-    }
-
-    private static function import(array $archive): ContextCollection
-    {
-        return new ContextCollection();
-    }
-
-    public function addTask()
-    {
-
+        $archive = new ArchiveAggregate();
+        foreach ($archiveData as $archiveContext) {
+            $context = $archive->addContext(new Context($archiveContext->name));
+            foreach ($archiveContext->taskCollection as $archiveTask) {
+                $context->addTask(new Task($archiveTask->name));
+            }
+        }
+        return $archive;
     }
 
     public function addContext(Context $newContext): Context
     {
         $context = $this->contexts->findBy('name', $newContext->name);
-        if (empty($context)) {
+        if ($context->isEmpty()) {
             $this->contexts->addItem($newContext);
             return $newContext;
         }
-        return $context;
-    }
-
-    public function removeContext(): void
-    {
-
-    }
-
-    public function contextExists(string $name): bool
-    {
-        return $this->contexts->find($name);
+        return $context->first();
     }
 
     public function toJson(): string
