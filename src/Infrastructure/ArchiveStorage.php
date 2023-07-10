@@ -11,13 +11,16 @@ class ArchiveStorage
 
     public function getArchive(): ArchiveAggregate
     {
-        return new ArchiveAggregate();
+        return ArchiveAggregate::import(
+            json_decode(file_get_contents(
+                $this->getArchivePath()
+            ))
+        );
     }
 
     public function saveArchive(ArchiveAggregate $archive): void
     {
-        dd($this->getArchivePath());
-        if (!$this->archiveNotExists()) {
+        if ($this->archiveNotExists()) {
             $this->filesystem->mkdir($this->getArchiveDirectory());
             $this->filesystem->touch($this->getArchivePath());
         }
@@ -29,9 +32,6 @@ class ArchiveStorage
         return !$this->filesystem->exists($this->getArchivePath());
     }
 
-    /**
-     * @return string
-     */
     private function getArchivePath(): string
     {
         return $this->getArchiveDirectory() . '/archive.json';
@@ -39,7 +39,6 @@ class ArchiveStorage
 
     private function getArchiveDirectory(): string
     {
-        return realpath('~/.terminal-tasks');
+        return './terminal-tasks';
     }
-
 }
